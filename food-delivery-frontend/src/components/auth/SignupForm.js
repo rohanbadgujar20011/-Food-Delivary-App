@@ -5,10 +5,10 @@ import './Auth.css';
 
 const SignupForm = () => {
   const [formData, setFormData] = useState({
-    username: '',
     email: '',
     password: '',
-    role: 'CUSTOMER'
+    confirmPassword: '',
+    role: 'USER'
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -28,7 +28,24 @@ const SignupForm = () => {
     setError('');
     setLoading(true);
 
-    const result = await signup(formData);
+    // Validate password confirmation
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match');
+      setLoading(false);
+      return;
+    }
+
+    // Validate password strength
+    if (formData.password.length < 6) {
+      setError('Password must be at least 6 characters long');
+      setLoading(false);
+      return;
+    }
+
+    // Remove confirmPassword from the data sent to API
+    const { confirmPassword, ...signupData } = formData;
+    
+    const result = await signup(signupData);
     
     if (result.success) {
       navigate('/login', { 
@@ -47,18 +64,6 @@ const SignupForm = () => {
         <h2>Create Account</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="form-group">
             <label htmlFor="email">Email</label>
             <input
               type="email"
@@ -67,6 +72,7 @@ const SignupForm = () => {
               value={formData.email}
               onChange={handleChange}
               required
+              placeholder="Enter your email"
             />
           </div>
 
@@ -80,6 +86,21 @@ const SignupForm = () => {
               onChange={handleChange}
               required
               minLength="6"
+              placeholder="Enter your password"
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="confirmPassword">Confirm Password</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              required
+              minLength="6"
+              placeholder="Confirm your password"
             />
           </div>
 
@@ -92,9 +113,10 @@ const SignupForm = () => {
               onChange={handleChange}
               required
             >
-              <option value="CUSTOMER">Customer</option>
-              <option value="DELIVERY_PARTNER">Delivery Partner</option>
+              <option value="USER">User</option>
               <option value="RESTAURANT_OWNER">Restaurant Owner</option>
+              <option value="DELIVERY_PARTNER">Delivery Partner</option>
+              <option value="ADMIN">Admin</option>
             </select>
           </div>
 

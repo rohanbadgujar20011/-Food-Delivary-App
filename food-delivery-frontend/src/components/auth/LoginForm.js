@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import ErrorPopup from '../ErrorPopup';
 import './Auth.css';
 
 const LoginForm = () => {
@@ -11,6 +12,7 @@ const LoginForm = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const [showErrorPopup, setShowErrorPopup] = useState(false);
   
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -37,9 +39,10 @@ const LoginForm = () => {
     const result = await login(formData.email, formData.password);
     
     if (result.success) {
-      navigate('/profile');
+      navigate('/dashboard');
     } else {
       setError(result.error);
+      setShowErrorPopup(true);
     }
     
     setLoading(false);
@@ -88,6 +91,15 @@ const LoginForm = () => {
           Don't have an account? <a href="/signup">Sign up here</a>
         </p>
       </div>
+      
+      <ErrorPopup 
+        message={error}
+        onClose={() => {
+          setShowErrorPopup(false);
+          setError('');
+        }}
+        type="error"
+      />
     </div>
   );
 };

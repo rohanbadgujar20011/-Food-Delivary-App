@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import ErrorPopup from '../ErrorPopup';
 import './Auth.css';
 
 const SignupForm = () => {
@@ -12,6 +13,7 @@ const SignupForm = () => {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showErrorPopup, setShowErrorPopup] = useState(false);
   
   const { signup } = useAuth();
   const navigate = useNavigate();
@@ -31,6 +33,7 @@ const SignupForm = () => {
     // Validate password confirmation
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
+      setShowErrorPopup(true);
       setLoading(false);
       return;
     }
@@ -38,6 +41,7 @@ const SignupForm = () => {
     // Validate password strength
     if (formData.password.length < 6) {
       setError('Password must be at least 6 characters long');
+      setShowErrorPopup(true);
       setLoading(false);
       return;
     }
@@ -53,6 +57,7 @@ const SignupForm = () => {
       });
     } else {
       setError(result.error);
+      setShowErrorPopup(true);
     }
     
     setLoading(false);
@@ -116,7 +121,6 @@ const SignupForm = () => {
               <option value="USER">User</option>
               <option value="RESTAURANT_OWNER">Restaurant Owner</option>
               <option value="DELIVERY_PARTNER">Delivery Partner</option>
-              <option value="ADMIN">Admin</option>
             </select>
           </div>
 
@@ -131,6 +135,15 @@ const SignupForm = () => {
           Already have an account? <a href="/login">Login here</a>
         </p>
       </div>
+      
+      <ErrorPopup 
+        message={error}
+        onClose={() => {
+          setShowErrorPopup(false);
+          setError('');
+        }}
+        type="error"
+      />
     </div>
   );
 };

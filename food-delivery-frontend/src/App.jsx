@@ -6,6 +6,8 @@ import './styles/main.css';
 // Import components
 import Navbar from './components/Navbar';
 import Home from './components/Home';
+import UserDashboard from './components/UserDashboard';
+import ErrorPopup from './components/ErrorPopup';
 
 // Auth components
 import SignupForm from './components/auth/SignupForm';
@@ -45,6 +47,7 @@ function App() {
               <Route path="/restaurants/:id" element={<RestaurantDetail />} />
               
               {/* Protected routes */}
+              <Route path="/dashboard" element={<UserDashboard />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/orders" element={<OrderList />} />

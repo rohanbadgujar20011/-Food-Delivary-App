@@ -40,8 +40,12 @@ const Navbar = () => {
 
           {user ? (
             <>
-              <Link to="/profile" className="navbar-link" onClick={closeMenu}>
-                Profile
+              <Link to="/dashboard" className="navbar-link" onClick={closeMenu}>
+                Dashboard
+              </Link>
+              
+              <Link to="/restaurants" className="navbar-link" onClick={closeMenu}>
+                Restaurants
               </Link>
               
               <Link to="/cart" className="navbar-link" onClick={closeMenu}>
@@ -50,10 +54,6 @@ const Navbar = () => {
               
               <Link to="/orders" className="navbar-link" onClick={closeMenu}>
                 Orders
-              </Link>
-              
-              <Link to="/notifications" className="navbar-link" onClick={closeMenu}>
-                Notifications
               </Link>
               
               <button 

@@ -1,0 +1,124 @@
+.error-popup {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10000;
+  max-width: 400px;
+  animation: slideIn 0.3s ease-out;
+}
+
+.popup-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  position: relative;
+}
+
+.error-popup.error .popup-content {
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+}
+
+.error-popup.success .popup-content {
+  background: #d4edda;
+  border: 1px solid #c3e6cb;
+  color: #155724;
+}
+
+.error-popup.warning .popup-content {
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  color: #856404;
+}
+
+.error-popup.info .popup-content {
+  background: #d1ecf1;
+  border: 1px solid #bee5eb;
+  color: #0c5460;
+}
+
+.popup-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.popup-message {
+  flex: 1;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.popup-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+  flex-shrink: 0;
+}
+
+.error-popup.error .popup-close:hover {
+  background-color: rgba(114, 28, 36, 0.1);
+}
+
+.error-popup.success .popup-close:hover {
+  background-color: rgba(21, 87, 36, 0.1);
+}
+
+.error-popup.warning .popup-close:hover {
+  background-color: rgba(133, 100, 4, 0.1);
+}
+
+.error-popup.info .popup-close:hover {
+  background-color: rgba(12, 84, 96, 0.1);
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .error-popup {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    max-width: none;
+  }
+
+  .popup-content {
+    padding: 0.875rem 1rem;
+  }
+
+  .popup-icon {
+    font-size: 1.3rem;
+  }
+
+  .popup-message {
+    font-size: 0.9rem;
+  }
+
+  .popup-close {
+    font-size: 1.3rem;
+    width: 20px;
+    height: 20px;
+  }
+}
